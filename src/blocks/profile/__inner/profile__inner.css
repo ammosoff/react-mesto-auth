@@ -1,0 +1,16 @@
+.profile__inner {
+  color: #fff;
+  display: grid;
+  column-gap: 18px;
+  row-gap: 16px;
+  grid-template-areas: 
+  "profile_name button_edit"
+  "profile_caption profile_caption";
+}
+
+@media screen and (max-width: 600px) {
+  .profile__inner {
+    column-gap: 10px;
+    row-gap: 14px;
+  }
+}
