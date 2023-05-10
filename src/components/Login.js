@@ -21,7 +21,7 @@ function Login() {
           placeholder="Пароль"
           required
         ></input>
-        <button class="login__button" type="submit">
+        <button className="login__button" type="submit">
           Войти
         </button>
       </form>

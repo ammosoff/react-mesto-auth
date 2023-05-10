@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from "react";
+import { Routes, Route, Navigate } from "react-router-dom";
 import Header from "./Header";
 import Main from "./Main";
 import Footer from "./Footer";
 import Login from "./Login";
 import Register from "./Register";
+import PageNotFound from "./PageNotFound";
 import PopupWithForm from "./PopupWithForm";
 import EditProfilePopup from "./EditProfilePopup";
 import EditAvatarPopup from "./EditAvatarPopup";
@@ -12,11 +14,10 @@ import ImagePopup from "./ImagePopup";
 import api from "../utils/api";
 import { CurrentUserContext } from "../contexts/CurrentUserContext";
 /* import { Routes, Route, Navigate, NavLink, useNavigate } from 'react-router-dom'; */
-import { Routes, Route, Navigate } from 'react-router-dom';
+import ProtectedRouteElement from "./ProtectedRoute"; // импортируем HOC
 
 function App() {
-
-/*   const navigate = useNavigate(); */
+  /*   const navigate = useNavigate(); */
 
   //переменные состояния, отвечающие за видимость попапов. Начальное состояние - false
   //т.е они не видны
@@ -150,29 +151,32 @@ function App() {
   return (
     <CurrentUserContext.Provider value={currentUser}>
       <div className="page">
-      <Header />
-{/*       {loggedIn && <Header />} */}
-      <Routes>
-      <Route path="/" element={loggedIn ? <Navigate to="/my-profile" replace /> : <Navigate to="/sign-in" replace />} /> 
-      <Route path="/sign-in" element={<Login />} /> 
-      <Route path="/sign-up" element={<Register />} />
-      <Route path="/my-profile" element={
-      <Main
-          cards={cards}
-          onEditAvatar={handleEditAvatarClick}
-          onEditProfile={handleEditProfileClick}
-          onAddPlace={handleAddPlaceClick}
-          onCardClick={handleCardClick}
-          onCardLike={handleCardLike}
-          onCardDelete={handleCardDelete}
-        />} />
-    </Routes>
+        <Header />
+        {/*       {loggedIn && <Header />} */}
+        <Routes>
 
-{/*     <NavLink to="/">Домой</NavLink>
-    <NavLink to="/sign-in">Авторизация</NavLink>
-    <NavLink to="/sign-up">Регистрация</NavLink> */}
+          <Route path="/sign-in" element={<Login />} />
+          <Route path="/sign-up" element={<Register />} />
 
+          <Route
+            path="/"
+            element={
+              <ProtectedRouteElement
+                element={Main}
+                loggedIn={loggedIn}
+                cards={cards}
+                onEditAvatar={handleEditAvatarClick}
+                onEditProfile={handleEditProfileClick}
+                onAddPlace={handleAddPlaceClick}
+                onCardClick={handleCardClick}
+                onCardLike={handleCardLike}
+                onCardDelete={handleCardDelete}
+              />
+            }
+          />
 
+        <Route path='*' element={<PageNotFound />} />
+        </Routes>
 
         <Footer />
 
