@@ -11,6 +11,7 @@ import EditProfilePopup from "./EditProfilePopup";
 import EditAvatarPopup from "./EditAvatarPopup";
 import AddPlacePopup from "./AddPlacePopup";
 import ImagePopup from "./ImagePopup";
+import InfoTooltip from "./InfoTooltip";
 import api from "../utils/api";
 import { CurrentUserContext } from "../contexts/CurrentUserContext";
 /* import { Routes, Route, Navigate, NavLink, useNavigate } from 'react-router-dom'; */
@@ -24,9 +25,10 @@ function App() {
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = useState(false);
   const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = useState(false);
   const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = useState(false);
+  const [isInfoTooltip, setIsInfoTooltip] = useState(true);
   const [selectedCard, setSelectedCard] = useState({ name: "", link: "" });
 
-  const [loggedIn, setLoggedIn] = useState(false); // loggedIn будет содержать статус пользователя — вошёл он в систему или нет.
+  const [loggedIn, setLoggedIn] = useState(true); // loggedIn будет содержать статус пользователя — вошёл он в систему или нет.
 
   // стейты текушего пользователя, карточек
   const [currentUser, setCurrentUser] = useState({});
@@ -86,6 +88,7 @@ function App() {
     setIsEditProfilePopupOpen(false);
     setIsAddPlacePopupOpen(false);
     setIsEditAvatarPopupOpen(false);
+    setIsInfoTooltip(false);
     setSelectedCard({ name: "", link: "" });
   };
 
@@ -210,6 +213,14 @@ function App() {
 
         {/* попап открытия картинки с описанием */}
         <ImagePopup card={selectedCard} onClose={closeAllPopups} />
+
+        {/* попап информации об успешной(или не очень) регистрации*/}
+        <InfoTooltip 
+          title="Тест"
+          isOpen={isInfoTooltip}
+          onClose={closeAllPopups}
+        />    
+
       </div>
     </CurrentUserContext.Provider>
   );
