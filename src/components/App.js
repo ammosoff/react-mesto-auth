@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import Header from "./Header";
 import Main from "./Main";
 import Footer from "./Footer";
+import Login from "./Login";
+import Register from "./Register";
 import PopupWithForm from "./PopupWithForm";
 import EditProfilePopup from "./EditProfilePopup";
 import EditAvatarPopup from "./EditAvatarPopup";
@@ -9,14 +11,21 @@ import AddPlacePopup from "./AddPlacePopup";
 import ImagePopup from "./ImagePopup";
 import api from "../utils/api";
 import { CurrentUserContext } from "../contexts/CurrentUserContext";
+/* import { Routes, Route, Navigate, NavLink, useNavigate } from 'react-router-dom'; */
+import { Routes, Route, Navigate } from 'react-router-dom';
 
 function App() {
+
+/*   const navigate = useNavigate(); */
+
   //переменные состояния, отвечающие за видимость попапов. Начальное состояние - false
   //т.е они не видны
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = useState(false);
   const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = useState(false);
   const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = useState(false);
   const [selectedCard, setSelectedCard] = useState({ name: "", link: "" });
+
+  const [loggedIn, setLoggedIn] = useState(false); // loggedIn будет содержать статус пользователя — вошёл он в систему или нет.
 
   // стейты текушего пользователя, карточек
   const [currentUser, setCurrentUser] = useState({});
@@ -141,8 +150,14 @@ function App() {
   return (
     <CurrentUserContext.Provider value={currentUser}>
       <div className="page">
-        <Header />
-        <Main
+      <Header />
+{/*       {loggedIn && <Header />} */}
+      <Routes>
+      <Route path="/" element={loggedIn ? <Navigate to="/my-profile" replace /> : <Navigate to="/sign-in" replace />} /> 
+      <Route path="/sign-in" element={<Login />} /> 
+      <Route path="/sign-up" element={<Register />} />
+      <Route path="/my-profile" element={
+      <Main
           cards={cards}
           onEditAvatar={handleEditAvatarClick}
           onEditProfile={handleEditProfileClick}
@@ -150,7 +165,15 @@ function App() {
           onCardClick={handleCardClick}
           onCardLike={handleCardLike}
           onCardDelete={handleCardDelete}
-        />
+        />} />
+    </Routes>
+
+{/*     <NavLink to="/">Домой</NavLink>
+    <NavLink to="/sign-in">Авторизация</NavLink>
+    <NavLink to="/sign-up">Регистрация</NavLink> */}
+
+
+
         <Footer />
 
         {/* попап редактирования профиля */}
