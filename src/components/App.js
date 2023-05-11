@@ -153,14 +153,27 @@ function App() {
       .catch((err) => console.log(err));
   };
 
-  // обработчик формы регистрации пользователя
+  // обработчик регистрации пользователя
   const handleRegistrationSubmit = ({email, password}) => {
     auth.register(password, email)
-    .then((res) => {
-      console.log(res)
+    .then(() => {
       setIsSuccess(true);
       setIsInfoTooltip(true);
       navigate('/sign-in', {replace: true})
+    })
+    .catch((err) => {
+      console.log(err);
+      setIsSuccess(false);
+      setIsInfoTooltip(true);
+    })
+  }
+
+  // обработчик авторизации пользователя 
+  const handleLoginSubmit = ({ email, password }) => {
+    auth.authorize(password, email)
+    .then(() => {
+      setLoggedIn(true);
+      navigate('/', {replace: true})
     })
     .catch((err) => {
       console.log(err);
@@ -176,7 +189,7 @@ function App() {
         {/*       {loggedIn && <Header />} */}
         <Routes>
 
-          <Route path="/sign-in" element={<Login />} />
+          <Route path="/sign-in" element={<Login onLogin={handleLoginSubmit}/>} />
           <Route path="/sign-up" element={<Register onRegistration={handleRegistrationSubmit}/>} />
 
           <Route

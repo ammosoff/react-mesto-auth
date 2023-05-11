@@ -19,8 +19,18 @@ export const headers = {
   }
 
   export const register = (password, email) => {
-    console.log(email, password)
     return request('/signup', {
+      method: 'POST',
+      headers: headers,
+      body: JSON.stringify({
+        password,
+        email
+      })
+    })
+  };
+
+  export const authorize = (password, email) => {
+    return request('/signin', {
       method: 'POST',
       headers: headers,
       body: JSON.stringify({

@@ -23,7 +23,6 @@ function Register({ onRegistration }) {
     onRegistration(formValue);// здесь обработчик регистрации
   }
 
-
   return (
     <section className="login">
       <h2 className="login__title">Регистрация</h2>
