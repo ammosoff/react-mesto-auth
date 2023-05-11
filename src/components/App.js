@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Routes, Route, Navigate } from "react-router-dom";
+import { Routes, Route, Navigate, useNavigate } from "react-router-dom";
 import Header from "./Header";
 import Main from "./Main";
 import Footer from "./Footer";
@@ -13,12 +13,13 @@ import AddPlacePopup from "./AddPlacePopup";
 import ImagePopup from "./ImagePopup";
 import InfoTooltip from "./InfoTooltip";
 import api from "../utils/api";
+import * as auth from "../utils/auth"
 import { CurrentUserContext } from "../contexts/CurrentUserContext";
 /* import { Routes, Route, Navigate, NavLink, useNavigate } from 'react-router-dom'; */
 import ProtectedRouteElement from "./ProtectedRoute"; // импортируем HOC
 
 function App() {
-  /*   const navigate = useNavigate(); */
+    const navigate = useNavigate();
 
   //переменные состояния, отвечающие за видимость попапов. Начальное состояние - false
   //т.е они не видны
@@ -28,7 +29,7 @@ function App() {
   const [isInfoTooltip, setIsInfoTooltip] = useState(false);
   const [selectedCard, setSelectedCard] = useState({ name: "", link: "" });
 
-  const [loggedIn, setLoggedIn] = useState(true); // loggedIn будет содержать статус пользователя — вошёл он в систему или нет.
+  const [loggedIn, setLoggedIn] = useState(false); // loggedIn будет содержать статус пользователя — вошёл он в систему или нет.
   const [isSuccess, setIsSuccess] = useState(false); // статус регистрации(успешна или нет)
 
   // стейты текушего пользователя, карточек
@@ -152,6 +153,22 @@ function App() {
       .catch((err) => console.log(err));
   };
 
+  // обработчик формы регистрации пользователя
+  const handleRegistrationSubmit = ({email, password}) => {
+    auth.register(password, email)
+    .then((res) => {
+      console.log(res)
+      setIsSuccess(true);
+      setIsInfoTooltip(true);
+      navigate('/sign-in', {replace: true})
+    })
+    .catch((err) => {
+      console.log(err);
+      setIsSuccess(false);
+      setIsInfoTooltip(true);
+    })
+  }
+
   return (
     <CurrentUserContext.Provider value={currentUser}>
       <div className="page">
@@ -160,7 +177,7 @@ function App() {
         <Routes>
 
           <Route path="/sign-in" element={<Login />} />
-          <Route path="/sign-up" element={<Register />} />
+          <Route path="/sign-up" element={<Register onRegistration={handleRegistrationSubmit}/>} />
 
           <Route
             path="/"
