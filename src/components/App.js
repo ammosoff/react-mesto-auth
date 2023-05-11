@@ -25,10 +25,11 @@ function App() {
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = useState(false);
   const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = useState(false);
   const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = useState(false);
-  const [isInfoTooltip, setIsInfoTooltip] = useState(true);
+  const [isInfoTooltip, setIsInfoTooltip] = useState(false);
   const [selectedCard, setSelectedCard] = useState({ name: "", link: "" });
 
   const [loggedIn, setLoggedIn] = useState(true); // loggedIn будет содержать статус пользователя — вошёл он в систему или нет.
+  const [isSuccess, setIsSuccess] = useState(false); // статус регистрации(успешна или нет)
 
   // стейты текушего пользователя, карточек
   const [currentUser, setCurrentUser] = useState({});
@@ -215,10 +216,13 @@ function App() {
         <ImagePopup card={selectedCard} onClose={closeAllPopups} />
 
         {/* попап информации об успешной(или не очень) регистрации*/}
-        <InfoTooltip 
-          title="Тест"
+        <InfoTooltip
+          name="registration"
+          textSuccess="Вы успешно зарегистрировались!"
+          textFail="Что-то пошло не так! Попробуйте ещё раз."
           isOpen={isInfoTooltip}
           onClose={closeAllPopups}
+          isSuccess={isSuccess}
         />    
 
       </div>

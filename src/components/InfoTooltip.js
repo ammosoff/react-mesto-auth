@@ -1,11 +1,11 @@
 import React from "react";
-import RegistrationSuccess from "../images/registration-success.svg"
-import RegistrationFail from "../images/registration-fail.png"
+import RegistrationSuccess from "../images/registration-success.svg";
+import RegistrationFail from "../images/registration-fail.png";
 
 function InfoTooltip(props) {
-  return(
+  return (
     <section
-      className={`popup popup_type_registration ${
+      className={`popup popup_type_${props.name} ${
         props.isOpen ? "popup_is-opened" : ""
       }`}
     >
@@ -16,11 +16,16 @@ function InfoTooltip(props) {
           aria-label="Закрыть форму"
           onClick={props.onClose}
         ></button>
-          <img className="popup__img popup__img_type_info" src={RegistrationFail}></img>
-          <p className="popup__title popup__title_type_info ">Что-то пошло не так! Попробуйте ещё раз.</p>
+        <img
+          className="popup__img popup__img_type_info"
+          src={props.isSuccess ? RegistrationSuccess : RegistrationFail}
+        ></img>
+        <h2 className="popup__title popup__title_type_info">
+          {props.isSuccess ? props.textSuccess : props.textFail}
+        </h2>
       </div>
     </section>
-  )
+  );
 }
 
 export default InfoTooltip;
