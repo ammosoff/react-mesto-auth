@@ -194,7 +194,7 @@ function App() {
   return (
     <CurrentUserContext.Provider value={currentUser}>
       <div className="page">
-        <Header userEmail={userEmail} loggedIn={loggedIn} onOut={signOut}/>
+        <Header userEmail={userEmail} onOut={signOut}/>
         <Routes>
           
           <Route
