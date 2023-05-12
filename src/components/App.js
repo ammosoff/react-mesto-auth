@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from "react";
-import { Routes, Route, useNavigate } from "react-router-dom";
+import { Routes, Route, useNavigate, Navigate } from "react-router-dom";
 import Header from "./Header";
 import Main from "./Main";
 import Footer from "./Footer";
 import Login from "./Login";
 import Register from "./Register";
-import PageNotFound from "./PageNotFound";
 import PopupWithForm from "./PopupWithForm";
 import EditProfilePopup from "./EditProfilePopup";
 import EditAvatarPopup from "./EditAvatarPopup";
@@ -189,10 +188,12 @@ function App() {
       <div className="page">
         <Header userEmail={userEmail} loggedIn={loggedIn} />
         <Routes>
+          
           <Route
             path="/sign-in"
             element={<Login onLogin={handleLoginSubmit} loggedIn={loggedIn} />}
           />
+
           <Route
             path="/sign-up"
             element={<Register onRegistration={handleRegistrationSubmit} />}
@@ -215,7 +216,10 @@ function App() {
             }
           />
 
-          <Route path="*" element={<PageNotFound />} />
+          <Route
+            path="*"
+            element={<Navigate to={loggedIn ? "/" : "/sign-in"} />}
+          />
         </Routes>
 
         <Footer />
