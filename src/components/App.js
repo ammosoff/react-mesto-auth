@@ -31,6 +31,7 @@ function App() {
 
   const [loggedIn, setLoggedIn] = useState(false); // loggedIn будет содержать статус пользователя — вошёл он в систему или нет.
   const [isSuccess, setIsSuccess] = useState(false); // статус регистрации(успешна или нет)
+  const [userEmail, setUserEmail] = useState(null) 
 
   // стейты текушего пользователя, карточек
   const [currentUser, setCurrentUser] = useState({});
@@ -48,13 +49,8 @@ function App() {
       });
   }, []);
 
-  // проверяем токен пользователя
+  // проверяем токен пользователя, если у пользователя есть токен в localStorage, проверим, действующий он или нет
   useEffect(() => {
-    tokenCheck();
-  }, []);
-
-  // если у пользователя есть токен в localStorage, эта функция проверит, действующий он или нет
-  const tokenCheck = () => {
     if(localStorage.getItem("token")) {
       const token = localStorage.getItem("token");
 
@@ -63,12 +59,12 @@ function App() {
         if(res) {
           setLoggedIn(true);
           navigate("/", {replace: true})
-          console.log(res.data.email)
+          setUserEmail(res.data.email)
         }
       })
       .catch((err) => console.log(err));
     }
-  };
+  }, []);
 
   //обработчики видимости попапов
   const handleEditAvatarClick = () => {
@@ -177,6 +173,7 @@ function App() {
       .authorize(password, email)
       .then((res) => {
         localStorage.setItem("token", res.token);
+        setUserEmail(email);
         setLoggedIn(true);
         navigate("/", { replace: true });
       })
@@ -190,7 +187,7 @@ function App() {
   return (
     <CurrentUserContext.Provider value={currentUser}>
       <div className="page">
-        <Header />
+        <Header userEmail={userEmail}/>
         {/*       {loggedIn && <Header />} */}
         <Routes>
           <Route
