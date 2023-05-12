@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/react-mesto-auth/static/css/main.53613ff7.css",
-    "main.js": "/react-mesto-auth/static/js/main.fe7ecdcc.js",
+    "main.css": "/react-mesto-auth/static/css/main.ea1c4eb0.css",
+    "main.js": "/react-mesto-auth/static/js/main.be349a9a.js",
     "static/js/787.2df4b1c8.chunk.js": "/react-mesto-auth/static/js/787.2df4b1c8.chunk.js",
     "static/media/Inter-Medium.woff": "/react-mesto-auth/static/media/Inter-Medium.9053572c46aeb4b16caa.woff",
     "static/media/Inter-Black.woff": "/react-mesto-auth/static/media/Inter-Black.c6938660eec019fefd68.woff",
@@ -13,17 +13,18 @@
     "static/media/like.svg": "/react-mesto-auth/static/media/like.1ad06e85f169668a1f36.svg",
     "index.html": "/react-mesto-auth/index.html",
     "static/media/button-trash.svg": "/react-mesto-auth/static/media/button-trash.ce3b64935accf9b8212e.svg",
+    "static/media/registration-success.svg": "/react-mesto-auth/static/media/registration-success.a9eb6caf1da3ff48b215fb1dd9477d74.svg",
     "static/media/like-active.svg": "/react-mesto-auth/static/media/like-active.35948469632d0421d697.svg",
     "static/media/button-edit.svg": "/react-mesto-auth/static/media/button-edit.af236f6cf67005f1d7aa.svg",
     "static/media/button-avatar.svg": "/react-mesto-auth/static/media/button-avatar.ae1a976ddb506239e9f0.svg",
     "static/media/popup-close.svg": "/react-mesto-auth/static/media/popup-close.039f1f5203f653b4bacd.svg",
     "static/media/button-add.svg": "/react-mesto-auth/static/media/button-add.bed8c136e13907f5eefb.svg",
-    "main.53613ff7.css.map": "/react-mesto-auth/static/css/main.53613ff7.css.map",
-    "main.fe7ecdcc.js.map": "/react-mesto-auth/static/js/main.fe7ecdcc.js.map",
+    "main.ea1c4eb0.css.map": "/react-mesto-auth/static/css/main.ea1c4eb0.css.map",
+    "main.be349a9a.js.map": "/react-mesto-auth/static/js/main.be349a9a.js.map",
     "787.2df4b1c8.chunk.js.map": "/react-mesto-auth/static/js/787.2df4b1c8.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.53613ff7.css",
-    "static/js/main.fe7ecdcc.js"
+    "static/css/main.ea1c4eb0.css",
+    "static/js/main.be349a9a.js"
   ]
 }
