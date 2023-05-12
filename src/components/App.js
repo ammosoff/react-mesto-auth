@@ -187,8 +187,7 @@ function App() {
   return (
     <CurrentUserContext.Provider value={currentUser}>
       <div className="page">
-        <Header userEmail={userEmail}/>
-        {/*       {loggedIn && <Header />} */}
+        <Header userEmail={userEmail} loggedIn={loggedIn}/>
         <Routes>
           <Route
             path="/sign-in"
