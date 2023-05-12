@@ -156,13 +156,13 @@ function App() {
       .register(password, email)
       .then(() => {
         setIsSuccess(true);
-        setIsInfoTooltip(true);
-        navigate("/sign-in", { replace: true });
+        setTimeout(() => setIsInfoTooltip(true), 500); // добавил небольшой таймаут чтобы данные в попапе успели обновиться
+        setTimeout(() => navigate("/sign-in", { replace: true }), 1000); 
       })
       .catch((err) => {
         console.log(err);
         setIsSuccess(false);
-        setIsInfoTooltip(true);
+        setTimeout(() => setIsInfoTooltip(true), 500);
       });
   };
 
