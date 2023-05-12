@@ -151,7 +151,7 @@ function App() {
   };
 
   // обработчик регистрации пользователя
-  const handleRegistrationSubmit = ({ email, password }) => {
+  const handleRegisterSubmit = ({ email, password }) => {
     auth
       .register(password, email)
       .then(() => {
@@ -204,7 +204,7 @@ function App() {
 
           <Route
             path="/sign-up"
-            element={<Register onRegistration={handleRegistrationSubmit} />}
+            element={<Register onRegister={handleRegisterSubmit} />}
           />
 
           <Route
