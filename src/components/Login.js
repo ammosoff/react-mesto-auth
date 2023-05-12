@@ -1,6 +1,12 @@
 import React, { useState } from "react";
+import { Routes, Route, Navigate, useNavigate } from "react-router-dom";
 
-function Login({ onLogin }) {
+function Login({ onLogin, loggedIn }) {
+/*   console.log(loggedIn)
+  if(loggedIn) {
+    <Navigate to="/" replace/>
+  } */
+
   const [formValue, setFormValue] = useState({
     email: "",
     password: "",

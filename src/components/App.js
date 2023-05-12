@@ -13,13 +13,13 @@ import AddPlacePopup from "./AddPlacePopup";
 import ImagePopup from "./ImagePopup";
 import InfoTooltip from "./InfoTooltip";
 import api from "../utils/api";
-import * as auth from "../utils/auth"
+import * as auth from "../utils/auth";
 import { CurrentUserContext } from "../contexts/CurrentUserContext";
 /* import { Routes, Route, Navigate, NavLink, useNavigate } from 'react-router-dom'; */
 import ProtectedRouteElement from "./ProtectedRoute"; // импортируем HOC
 
 function App() {
-    const navigate = useNavigate();
+  const navigate = useNavigate();
 
   //переменные состояния, отвечающие за видимость попапов. Начальное состояние - false
   //т.е они не видны
@@ -48,25 +48,27 @@ function App() {
       });
   }, []);
 
-  /*   React.useEffect(() => {
-    api
-      .getUserInfo()
-      .then((userData) => {
-        setCurrentUser(userData);
-      })
-      .catch((err) => console.log(err));
+  // проверяем токен пользователя
+  useEffect(() => {
+    tokenCheck();
   }, []);
 
-  React.useEffect(() => {
-    api
-      .getInitialCards()
-      .then((cards) => {
-        setCards(cards);
+  // если у пользователя есть токен в localStorage, эта функция проверит, действующий он или нет
+  const tokenCheck = () => {
+    if(localStorage.getItem("token")) {
+      const token = localStorage.getItem("token");
+
+      auth.checkToken(token)
+      .then((res) => {
+        if(res) {
+          setLoggedIn(true);
+          navigate("/", {replace: true})
+          console.log(res.data.email)
+        }
       })
-      .catch((err) => {
-        console.log(err); // выведем ошибку в консоль
-      });
-  }, []); */
+      .catch((err) => console.log(err));
+    }
+  };
 
   //обработчики видимости попапов
   const handleEditAvatarClick = () => {
@@ -154,33 +156,36 @@ function App() {
   };
 
   // обработчик регистрации пользователя
-  const handleRegistrationSubmit = ({email, password}) => {
-    auth.register(password, email)
-    .then(() => {
-      setIsSuccess(true);
-      setIsInfoTooltip(true);
-      navigate('/sign-in', {replace: true})
-    })
-    .catch((err) => {
-      console.log(err);
-      setIsSuccess(false);
-      setIsInfoTooltip(true);
-    })
-  }
+  const handleRegistrationSubmit = ({ email, password }) => {
+    auth
+      .register(password, email)
+      .then(() => {
+        setIsSuccess(true);
+        setIsInfoTooltip(true);
+        navigate("/sign-in", { replace: true });
+      })
+      .catch((err) => {
+        console.log(err);
+        setIsSuccess(false);
+        setIsInfoTooltip(true);
+      });
+  };
 
-  // обработчик авторизации пользователя 
+  // обработчик авторизации пользователя
   const handleLoginSubmit = ({ email, password }) => {
-    auth.authorize(password, email)
-    .then(() => {
-      setLoggedIn(true);
-      navigate('/', {replace: true})
-    })
-    .catch((err) => {
-      console.log(err);
-      setIsSuccess(false);
-      setIsInfoTooltip(true);
-    })
-  }
+    auth
+      .authorize(password, email)
+      .then((res) => {
+        localStorage.setItem("token", res.token);
+        setLoggedIn(true);
+        navigate("/", { replace: true });
+      })
+      .catch((err) => {
+        console.log(err);
+        setIsSuccess(false);
+        setIsInfoTooltip(true);
+      });
+  };
 
   return (
     <CurrentUserContext.Provider value={currentUser}>
@@ -188,9 +193,14 @@ function App() {
         <Header />
         {/*       {loggedIn && <Header />} */}
         <Routes>
-
-          <Route path="/sign-in" element={<Login onLogin={handleLoginSubmit}/>} />
-          <Route path="/sign-up" element={<Register onRegistration={handleRegistrationSubmit}/>} />
+          <Route
+            path="/sign-in"
+            element={<Login onLogin={handleLoginSubmit} loggedIn={loggedIn} />}
+          />
+          <Route
+            path="/sign-up"
+            element={<Register onRegistration={handleRegistrationSubmit} />}
+          />
 
           <Route
             path="/"
@@ -209,7 +219,7 @@ function App() {
             }
           />
 
-        <Route path='*' element={<PageNotFound />} />
+          <Route path="*" element={<PageNotFound />} />
         </Routes>
 
         <Footer />
@@ -253,8 +263,7 @@ function App() {
           isOpen={isInfoTooltip}
           onClose={closeAllPopups}
           isSuccess={isSuccess}
-        />    
-
+        />
       </div>
     </CurrentUserContext.Provider>
   );

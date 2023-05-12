@@ -18,6 +18,7 @@ export const headers = {
     return fetch(`${BASE_URL}${url}`, options).then(getRequestState)
   }
 
+  // регистрация
   export const register = (password, email) => {
     return request('/signup', {
       method: 'POST',
@@ -29,6 +30,7 @@ export const headers = {
     })
   };
 
+  // авторизация
   export const authorize = (password, email) => {
     return request('/signin', {
       method: 'POST',
@@ -37,5 +39,16 @@ export const headers = {
         password,
         email
       })
+    })
+  };
+
+  // проверка валидности токена и получение email
+  export const checkToken = (token) => {
+    return request('/users/me', {
+      method: 'GET',
+      headers: {
+        headers,
+        "Authorization" : `Bearer ${token}`
+      }
     })
   };
