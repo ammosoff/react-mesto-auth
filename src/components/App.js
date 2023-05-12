@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Routes, Route, Navigate, useNavigate } from "react-router-dom";
+import { Routes, Route, useNavigate } from "react-router-dom";
 import Header from "./Header";
 import Main from "./Main";
 import Footer from "./Footer";
@@ -15,7 +15,6 @@ import InfoTooltip from "./InfoTooltip";
 import api from "../utils/api";
 import * as auth from "../utils/auth";
 import { CurrentUserContext } from "../contexts/CurrentUserContext";
-/* import { Routes, Route, Navigate, NavLink, useNavigate } from 'react-router-dom'; */
 import ProtectedRouteElement from "./ProtectedRoute"; // импортируем HOC
 
 function App() {
@@ -31,7 +30,7 @@ function App() {
 
   const [loggedIn, setLoggedIn] = useState(false); // loggedIn будет содержать статус пользователя — вошёл он в систему или нет.
   const [isSuccess, setIsSuccess] = useState(false); // статус регистрации(успешна или нет)
-  const [userEmail, setUserEmail] = useState(null) 
+  const [userEmail, setUserEmail] = useState(null);
 
   // стейты текушего пользователя, карточек
   const [currentUser, setCurrentUser] = useState({});
@@ -51,18 +50,19 @@ function App() {
 
   // проверяем токен пользователя, если у пользователя есть токен в localStorage, проверим, действующий он или нет
   useEffect(() => {
-    if(localStorage.getItem("token")) {
+    if (localStorage.getItem("token")) {
       const token = localStorage.getItem("token");
 
-      auth.checkToken(token)
-      .then((res) => {
-        if(res) {
-          setLoggedIn(true);
-          navigate("/", {replace: true})
-          setUserEmail(res.data.email)
-        }
-      })
-      .catch((err) => console.log(err));
+      auth
+        .checkToken(token)
+        .then((res) => {
+          if (res) {
+            setLoggedIn(true);
+            navigate("/", { replace: true });
+            setUserEmail(res.data.email);
+          }
+        })
+        .catch((err) => console.log(err));
     }
   }, []);
 
@@ -187,7 +187,7 @@ function App() {
   return (
     <CurrentUserContext.Provider value={currentUser}>
       <div className="page">
-        <Header userEmail={userEmail} loggedIn={loggedIn}/>
+        <Header userEmail={userEmail} loggedIn={loggedIn} />
         <Routes>
           <Route
             path="/sign-in"

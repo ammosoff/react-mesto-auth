@@ -1,27 +1,27 @@
 import React, { useState } from "react";
-import { Link } from 'react-router-dom';
+import { Link } from "react-router-dom";
 
 function Register({ onRegistration }) {
   const [formValue, setFormValue] = useState({
-    email: '',
-    password: '',
-  })
+    email: "",
+    password: "",
+  });
 
   // обработчик инпутов формы
   const handleChange = (e) => {
-    const {name, value} = e.target;
+    const { name, value } = e.target;
 
     setFormValue({
       ...formValue,
-      [name]: value
+      [name]: value,
     });
-  }
+  };
 
   // обработчик отправки формы
   const handleSubmit = (e) => {
     e.preventDefault();
-    onRegistration(formValue);// здесь обработчик регистрации
-  }
+    onRegistration(formValue); // здесь обработчик регистрации
+  };
 
   return (
     <section className="login">
@@ -55,7 +55,12 @@ function Register({ onRegistration }) {
           Зарегистрироваться
         </button>
       </form>
-      <p className="login__signup">Уже зарегистрированы?<Link className="login__link" to="/sign-in">Войти</Link></p>
+      <p className="login__signup">
+        Уже зарегистрированы?
+        <Link className="login__link" to="/sign-in">
+          Войти
+        </Link>
+      </p>
     </section>
   );
 }
