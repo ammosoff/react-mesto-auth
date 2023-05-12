@@ -1,7 +1,7 @@
 /* api аутентификации */
 
-export const BASE_URL = 'https://auth.nomoreparties.co';
-export const headers = {
+const BASE_URL = 'https://auth.nomoreparties.co';
+const headers = {
   'Content-Type': 'application/json'
 }
 
