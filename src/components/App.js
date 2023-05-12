@@ -183,10 +183,18 @@ function App() {
       });
   };
 
+  // выход
+  const signOut = () => {
+    localStorage.removeItem("token");
+    setLoggedIn(false);
+    setUserEmail(null);
+    navigate("sign-in", { replace: true });
+  };
+
   return (
     <CurrentUserContext.Provider value={currentUser}>
       <div className="page">
-        <Header userEmail={userEmail} loggedIn={loggedIn} />
+        <Header userEmail={userEmail} loggedIn={loggedIn} onOut={signOut}/>
         <Routes>
           
           <Route

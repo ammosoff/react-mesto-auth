@@ -1,14 +1,7 @@
 import React from "react";
-import { useNavigate, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 
-function NavBar({ userEmail, loggedIn }) {
-  const navigate = useNavigate();
-
-  const signOut = () => {
-    localStorage.removeItem("token");
-    userEmail = null;
-    navigate("sign-in", { replace: true });
-  };
+function NavBar({ userEmail, loggedIn, onOut }) {
 
   return (
     <nav className="menu">
@@ -16,7 +9,7 @@ function NavBar({ userEmail, loggedIn }) {
       <Link
         className={`menu__link ${loggedIn ? "menu__link_active" : ""}`}
         to={"/sign-in"}
-        onClick={signOut}
+        onClick={onOut}
       >
         Выйти
       </Link>

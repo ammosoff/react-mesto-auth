@@ -3,7 +3,7 @@ import headerLogo from "../images/logo.svg";
 import NavBar from "./NavBar";
 import { Link, Route, Routes } from "react-router-dom";
 
-function Header({ userEmail, loggedIn }) {
+function Header({ userEmail, loggedIn, onOut }) {
   return (
     <header className="header">
       <img className="header__logo" src={headerLogo} alt="Логотип mesto" />
@@ -27,7 +27,7 @@ function Header({ userEmail, loggedIn }) {
         />
         <Route
           path="/"
-          element={<NavBar userEmail={userEmail} loggedIn={loggedIn} />}
+          element={<NavBar userEmail={userEmail} loggedIn={loggedIn} onOut={onOut}/>}
         />
       </Routes>
     </header>
